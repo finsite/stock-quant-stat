@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-quant-stat
+  labels:
+    app: stock-quant-stat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-quant-stat
+  template:
+    metadata:
+      labels:
+        app: stock-quant-stat
+    spec:
+      containers:
+        - name: stock-quant-stat
+          image: stock-quant-stat:latest
+          ports:
+            - containerPort: 8080
