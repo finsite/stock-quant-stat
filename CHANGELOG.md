@@ -7,6 +7,13 @@
 - Initial project structure cloned from template_python
 - Custom configuration and module setup for `stock-quant-stat`
 
+## v0.1.1 (2025-06-03)
+
+### Fix
+
+- **files**: Cleanup redundant files and standardize
+- **poller**: integrate updates
+
 ## v0.1.0 (2025-05-23)
 
 ### Feat
