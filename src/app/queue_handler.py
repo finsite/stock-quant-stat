@@ -1,6 +1,6 @@
 """Handles message queue consumption for RabbitMQ and SQS.
 
-This module receives SEC filing data, applies sentiment analysis,
+This module receives analysis input data (e.g., SEC filings), applies sentiment analysis,
 and sends processed results to the output handler.
 """
 
@@ -40,7 +40,14 @@ if QUEUE_TYPE == "sqs":
 
 
 def connect_to_rabbitmq() -> pika.BlockingConnection:
-    """Connects to RabbitMQ with retry logic."""
+    """Connects to RabbitMQ with retry logic.
+
+    Returns:
+        pika.BlockingConnection: A live RabbitMQ connection.
+
+    Raises:
+        ConnectionError: If connection attempts are exhausted.
+    """
     retries = 5
     while retries > 0:
         try:
@@ -56,7 +63,7 @@ def connect_to_rabbitmq() -> pika.BlockingConnection:
 
 
 def consume_rabbitmq() -> None:
-    """Consumes messages from RabbitMQ."""
+    """Consumes messages from RabbitMQ and processes them."""
     connection = connect_to_rabbitmq()
     channel = connection.channel()
 
@@ -67,18 +74,7 @@ def consume_rabbitmq() -> None:
     )
 
     def callback(ch, method, properties, body: bytes) -> None:
-        """:param ch: param method:
-        :param properties: param body: bytes:
-        :param method: param body: bytes:
-        :param body: bytes:
-        :param body: type body: bytes :
-        :param body: type body: bytes :
-        :param body: bytes:
-        :param body: bytes:
-        :param body: bytes:
-        :param body: bytes:
-
-        """
+        """Callback for handling RabbitMQ messages."""
         try:
             message = json.loads(body)
             logger.info("Received message: %s", message)
@@ -109,7 +105,7 @@ def consume_rabbitmq() -> None:
 
 
 def consume_sqs() -> None:
-    """Consumes messages from Amazon SQS."""
+    """Consumes messages from Amazon SQS and processes them."""
     if not sqs_client or not SQS_QUEUE_URL:
         logger.error("SQS not initialized or missing queue URL.")
         return
@@ -137,7 +133,7 @@ def consume_sqs() -> None:
                     sqs_client.delete_message(
                         QueueUrl=SQS_QUEUE_URL, ReceiptHandle=msg["ReceiptHandle"]
                     )
-                    logger.info("Deleted SQS message: %s", msg["MessageId"])
+                    logger.info("Deleted SQS message: %s", msg.get("MessageId"))
                 except Exception as e:
                     logger.error("Error processing SQS message: %s", e)
         except Exception as e:

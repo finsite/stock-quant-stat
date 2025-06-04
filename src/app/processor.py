@@ -1,4 +1,9 @@
-# """Processor module for news sentiment analysis."""
+"""Processor module for news sentiment analysis.
+
+This module analyzes the sentiment of incoming news content using TextBlob.
+It extracts a polarity score and classifies the sentiment into
+'positive', 'neutral', or 'negative'.
+"""
 
 from typing import Any
 
@@ -14,21 +19,10 @@ def analyze_sentiment(data: dict[str, Any]) -> dict[str, Any]:
     """Analyzes sentiment of news content.
 
     Args:
-    ----
         data (dict[str, Any]): A dictionary containing at least a 'headline' or 'content' key.
 
-    :param data: dict[str:
-    :param Any: param data: dict[str:
-    :param Any: param data: dict[str:
-    :param Any: param data:
-    :param Any: param data:
-    :param data: dict[str:
-    :param data: dict[str:
-    :param Any: param data: dict[str:
-    :param Any:
-    :param data: dict[str:
-    :param Any]:
-
+    Returns:
+        dict[str, Any]: The input dictionary with 'sentiment_score' and 'sentiment_label' added.
     """
     content = data.get("headline") or data.get("content")
 
@@ -40,7 +34,7 @@ def analyze_sentiment(data: dict[str, Any]) -> dict[str, Any]:
 
     try:
         analysis = TextBlob(content)
-        sentiment: Any = analysis.sentiment  # ✅ Avoid Pyright complaint
+        sentiment: Any = analysis.sentiment  # For Pyright compatibility
         polarity = sentiment.polarity
 
         data["sentiment_score"] = polarity
@@ -60,19 +54,10 @@ def classify_sentiment(score: float) -> str:
     """Classifies polarity score into sentiment label.
 
     Args:
-    ----
-        score (float): Polarity score from -1 to 1.
+        score (float): Polarity score from -1.0 to 1.0.
 
-    :param score: float:
-    :param score: float:
-    :param score: float:
-    :param score: type score: float :
-    :param score: type score: float :
-    :param score: float:
-    :param score: float:
-    :param score: float:
-    :param score: float:
-
+    Returns:
+        str: One of 'positive', 'neutral', or 'negative'.
     """
     if score > 0.1:
         return "positive"

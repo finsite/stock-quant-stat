@@ -14,20 +14,10 @@ logger = setup_logger(__name__)
 
 
 def publish_to_queue(payload: list[dict]) -> None:
-    """Publishes processed candlestick analysis results to RabbitMQ or SQS.
+    """Publishes a list of processed analysis results to RabbitMQ or SQS.
 
-    :param payload: A list of message payloads to publish.
-    :type payload: list[dict]
-    :param payload: list[dict]:
-    :param payload: list[dict]:
-    :param payload: list[dict]:
-    :param payload: type payload: list[dict] :
-    :param payload: type payload: list[dict] :
-    :param payload: list[dict]:
-    :param payload: list[dict]:
-    :param payload: list[dict]:
-    :param payload: list[dict]:
-
+    Args:
+        payload (list[dict]): A list of message payloads to publish.
     """
     queue_type = config.get_queue_type()
 
@@ -41,20 +31,10 @@ def publish_to_queue(payload: list[dict]) -> None:
 
 
 def _send_to_rabbitmq(data: dict) -> None:
-    """Sends a single message to RabbitMQ using config-based credentials.
+    """Sends a single message to RabbitMQ using credentials from config.
 
-    :param data: The message payload to send.
-    :type data: dict
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
-    :param data: type data: dict :
-    :param data: type data: dict :
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
-
+    Args:
+        data (dict): The message payload to send.
     """
     try:
         credentials = pika.PlainCredentials(
@@ -84,18 +64,8 @@ def _send_to_rabbitmq(data: dict) -> None:
 def _send_to_sqs(data: dict) -> None:
     """Sends a single message to AWS SQS using the configured queue.
 
-    :param data: The message payload to send.
-    :type data: dict
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
-    :param data: type data: dict :
-    :param data: type data: dict :
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
-
+    Args:
+        data (dict): The message payload to send.
     """
     sqs_url = config.get_sqs_queue_url()
     region = config.get_sqs_region()

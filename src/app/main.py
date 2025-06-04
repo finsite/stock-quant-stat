@@ -1,6 +1,6 @@
-"""Main entry point for the Stock-Sent-SEC module.
+"""Main entry point for the Stock-Quant-Stat module.
 
-This script initializes the SEC filings sentiment analysis service,
+This script initializes the statistical analysis service for quant strategies,
 sets up logging, and starts consuming messages from the configured
 message queue.
 """
@@ -19,14 +19,12 @@ logger = setup_logger(__name__)
 
 
 def main() -> None:
-    """Starts the SEC Sentiment Analysis Service.
+    """Starts the Quant Statistical Analysis Service.
 
     This service listens to messages from a queue (RabbitMQ or SQS),
-    applies sentiment analysis to SEC filings, and publishes the results.
-
-
+    performs statistical analysis, and publishes the results.
     """
-    logger.info("Starting SEC Sentiment Analysis Service...")
+    logger.info("Starting Quant Statistical Analysis Service...")
     consume_messages()
 
 

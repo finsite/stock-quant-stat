@@ -13,23 +13,12 @@ def setup_logger(name: str = "app") -> logging.Logger:
     The default log level is controlled via the LOG_LEVEL environment variable.
 
     Args:
-    ----
         name (str): The name of the logger. Defaults to "app".
 
-    :param name: str:  (Default value = "app")
-    :param name: str:  (Default value = "app")
-    :param name: str:  (Default value = "app")
-    :param name: Default value = "app")
-    :type name: str :
-    :param name: Default value = "app")
-    :type name: str :
-    :param name: str:  (Default value = "app")
-    :param name: str:  (Default value = "app")
-    :param name: str:  (Default value = "app")
-    :param name: str:  (Default value = "app")
-
+    Returns:
+        logging.Logger: Configured logger instance.
     """
-    logger: logging.Logger = logging.getLogger(name)
+    logger = logging.getLogger(name)
 
     if not logger.hasHandlers():
         handler = logging.StreamHandler()
