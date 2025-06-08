@@ -23,6 +23,7 @@ def analyze_sentiment(data: dict[str, Any]) -> dict[str, Any]:
 
     Returns:
         dict[str, Any]: The input dictionary with 'sentiment_score' and 'sentiment_label' added.
+
     """
     content = data.get("headline") or data.get("content")
 
@@ -58,6 +59,7 @@ def classify_sentiment(score: float) -> str:
 
     Returns:
         str: One of 'positive', 'neutral', or 'negative'.
+
     """
     if score > 0.1:
         return "positive"
